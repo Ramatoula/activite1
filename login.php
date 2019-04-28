@@ -1,3 +1,17 @@
+<?php
+//recuperation des variables
+$email=$_POST['email'];
+$password=$_POST['password'];
+try
+  {
+    //on se connecte a mysql
+  $bdd = new PDO('mysql:host=localhost;dbname=institut_de_beaute;charset=utf8', 'root', '');
+  }
+  catch (\Exception $e)
+  {
+    die('Erreur:'.$e->getMessage ());
+  }
+ ?>
 <!DOCTYPE html>
 <html>
 	<head>
