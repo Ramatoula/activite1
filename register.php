@@ -6,6 +6,45 @@
   $confirm_password=$_POST['confirm_password'];
   if($_POST['password']==$_POST['confirm_password']){
      $hash=password_hash($_POST['password'], PASSWORD_BCRYPT);
+     try
+  {
+    //on se connecte a mysql
+  $bdd = new PDO('mysql:host=localhost;dbname=institut_de_beaute;charset=utf8', 'root', '');
+  }
+  catch (\Exception $e)
+  {
+    die('Erreur:'.$e->getMessage ());
+  }
+  $utilisateurUnique = $bdd->prepare('SELECT* FROM users WHERE username= :username');
+  $utilisateurUnique->execute(array(
+      'username' => $username));
+      $user = $utilisateurUnique->fetch();
+      if ($user)
+      {
+         echo "cet utilisateur existe déja</br>";
+      }
+  $emailUnique = $bdd->prepare('SELECT* FROM users WHERE email= :email');
+  $emailUnique->execute(array(
+    'email'=>$email));
+    $user = $emailUnique->fetch();
+    if ($user)
+    {
+      echo "cet email est déjà pris </br>";
+    }
+    else {
+     $saisirInformationUtilisateur=$bdd->prepare('INSERT INTO users (username, email, password, register_date) VALUES(:username,:email, :password, Now())');
+     $saisirInformationUtilisateur->execute(array(
+        'username'=>$username,
+        'email'=>$email,
+        'password'=>$hash
+      ));
+        echo "inscription réussi!";
+  }
+    }
+
+ else {
+ echo "ses deux mots de passes ne sont pas identiques";
+ }
  ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
