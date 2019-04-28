@@ -1,3 +1,12 @@
+<?php
+//recuperation des variables du formulaire
+  $username=$_POST['username'];
+  $email=$_POST['email'];
+  $password=$_POST['password'];
+  $confirm_password=$_POST['confirm_password'];
+  if($_POST['password']==$_POST['confirm_password']){
+     $hash=password_hash($_POST['password'], PASSWORD_BCRYPT);
+ ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
  <head>
